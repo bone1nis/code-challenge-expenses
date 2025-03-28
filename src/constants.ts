@@ -1,0 +1,17 @@
+export const categories = [
+    { key: "food", value: "Продукты" },
+    { key: "housing", value: "Жильё" },
+    { key: "transportation", value: "Транспорт" },
+    { key: "health", value: "Здоровье" },
+    { key: "education", value: "Образование" },
+    { key: "entertainment", value: "Развлечения" },
+    { key: "clothing", value: "Одежда" },
+    { key: "utilities", value: "Коммунальные услуги" },
+    { key: "loans", value: "Кредиты" },
+    { key: "vacationAndTravel", value: "Отпуск и путешествия" },
+    { key: "insurance", value: "Страхование" },
+    { key: "charity", value: "Благотворительность" },
+    { key: "gifts", value: "Подарки" },
+    { key: "electronics", value: "Электроника" },
+    { key: "miscellaneous", value: "Прочее" },
+] as const;

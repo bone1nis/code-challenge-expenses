@@ -1,12 +1,14 @@
 import { useState, useCallback, useMemo } from 'react';
-import { Paper, Stack, Typography, Button, Box, Divider, TextField, Alert, useTheme } from '@mui/material';
+import { Paper, Stack, Typography, Button, Box, Divider, TextField, Alert, useTheme, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { red, grey } from '@mui/material/colors';
 import { RemoveCircle, Event, AttachMoney } from '@mui/icons-material';
 
 import { useStore } from '../stores/RootStoreContext';
-import { Expense } from '../types';
+import { Expense, Category } from '../types';
 
 import { useExpenseForm } from '../hooks/useExpenseForm';
+
+import { categories } from '../constants';
 
 import ConfirmationDialog from './ConfirmationDialog';
 
@@ -24,7 +26,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
             color: theme.palette.secondary.main
         }
     };
-    
+
     const { expensesStore } = useStore();
     const { expense: editedExpense, setExpense: setEditedExpense, error, setError, handleEditChange, validateFields } = useExpenseForm({
         category: expense.category,
@@ -118,13 +120,23 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
                 <Stack direction="row" justifyContent="space-between" alignItems="start">
                     {isEditing ? (
                         <Stack direction="column" gap={2}>
-                            <TextField
-                                label="Категория"
-                                value={editedExpense.category}
-                                onChange={(e) => handleEditChange(e, 'category')}
-                                size="small"
-                                required
-                            />
+                            <FormControl fullWidth>
+                                <InputLabel id="select-category-label">Категория</InputLabel>
+                                <Select
+                                    labelId="select-category-label"
+                                    id="select-category"
+                                    value={editedExpense.category}
+                                    label="Категория"
+                                    size="medium"
+                                    onChange={(e) => handleEditChange(e, 'category')}
+                                >
+                                    {categories.map((category) => (
+                                        <MenuItem key={category.key} value={category.key}>
+                                            {category.value}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Stack>
                     ) : (
                         <Typography
@@ -134,7 +146,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
                                 color: theme.palette.primary.main,
                             }}
                         >
-                            {expense.category} - {expense.amount} ₽
+                            {(categories.find(category => category.key === expense.category) as Category).value} - {expense.amount} ₽
                         </Typography>
                     )}
 
@@ -158,7 +170,6 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
                                     value={editedExpense.amount}
                                     onChange={(e) => handleEditChange(e, 'amount')}
                                     size="small"
-                                    type="number"
                                     required
                                 />
                             ) : (
@@ -213,7 +224,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
 
             <ConfirmationDialog
                 isOpen={dialogState.open && dialogState.type === 'delete'}
-                title="Вы точно хотите удалить расход?"
+                title="Вы точно хотите удалить запись расхода?"
                 onClose={handleCancelDelete}
                 onConfirm={handleDeleteExpense}
             />

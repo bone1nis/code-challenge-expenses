@@ -1,21 +1,26 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
-    palette: {
-        primary: {
-            main: "#009688",
-            contrastText: "#fff"
-        },
+  palette: {
+    primary: {
+      main: "#009688",
+      contrastText: "#fff",
     },
-    components: {
-        MuiTypography: {
-            styleOverrides: {
-                root: {
-                    wordBreak: 'break-word',
-                },
-            },
+  },
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          wordBreak: "break-word",
         },
+      },
     },
+    MuiPopover: {
+      defaultProps: {
+        disableScrollLock: true,
+      },
+    },
+  },
 });
 
 export default theme;

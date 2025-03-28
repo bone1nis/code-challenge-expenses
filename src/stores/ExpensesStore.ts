@@ -6,13 +6,13 @@ export class ExpensesStore {
     expenses: Expense[] = [
         {
             id: "айди1",
-            category: "1",
+            category: "charity",
             amount: 123,
             date: "01-02-2025"
         },
         {
             id: "айди2",
-            category: "2",
+            category: "clothing",
             amount: 234,
             date: "01-03-2025"
         }
