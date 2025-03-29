@@ -7,8 +7,8 @@ application for creating, deleting, editing, filtered expends
 ### React
 ### TypeScript
 ### Mobx
-## MUI
-## dayjs
+### MUI
+### dayjs
 
 
 ## Installing of the project
