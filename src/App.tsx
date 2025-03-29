@@ -2,6 +2,7 @@ import { Box, Container, Stack } from '@mui/material';
 
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
+
 import ExpensesList from './components/expenses/ExpensesList';
 import ExpenseFilters from './components/expenses/ExpenseFilters';
 import ExpenseForm from './components/expenses/ExpenseForm';

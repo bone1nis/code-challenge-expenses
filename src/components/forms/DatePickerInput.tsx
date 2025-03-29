@@ -7,7 +7,9 @@ type DatePickerInputProps = {
     onChange: (date: dayjs.Dayjs | null) => void
 }
 
-const DatePickerInput: React.FC<DatePickerInputProps> = ({ value, onChange }) => (
+const DatePickerInput: React.FC<DatePickerInputProps> = ({
+    value,
+    onChange }) => (
     <DateTimePicker
         label="Дата"
         value={dayjs(value)}

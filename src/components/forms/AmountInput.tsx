@@ -4,7 +4,9 @@ type AmountInputProps = {
     value: number;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
-const AmountInput: React.FC<AmountInputProps> = ({ value, onChange }) => (
+const AmountInput: React.FC<AmountInputProps> = ({
+    value,
+    onChange }) => (
     <TextField
         label="Сумма"
         value={value}

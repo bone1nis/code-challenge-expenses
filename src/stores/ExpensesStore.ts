@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+
 import { Expense, Filters } from "../utils/types";
 
 const LOCAL_STORAGE_EXPENSES = "expenses_data";

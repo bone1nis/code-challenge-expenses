@@ -9,7 +9,10 @@ type CategorySelectProps = {
     viewAll?: boolean;
 }
 
-const CategorySelect: React.FC<CategorySelectProps> = ({ value, onChange, viewAll }) => {
+const CategorySelect: React.FC<CategorySelectProps> = ({
+    value,
+    onChange,
+    viewAll }) => {
     return (
         <FormControl fullWidth>
             <InputLabel id="select-category-label">Категория</InputLabel>

@@ -7,7 +7,11 @@ type ConfirmationDialogProps = {
     onConfirm: () => void;
 };
 
-const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ isOpen, title, onClose, onConfirm }) => {
+const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({
+    isOpen,
+    title,
+    onClose,
+    onConfirm }) => {
 
     return (
         <Dialog
