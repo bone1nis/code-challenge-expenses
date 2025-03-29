@@ -1,28 +1,34 @@
-import { FormEvent, useCallback, useState } from "react";
+import { FormEvent, useCallback, useMemo, useState } from "react";
 
 import { Box, Button, Stack, Typography, Paper, Alert } from "@mui/material";
 
 import dayjs from "dayjs";
 
-import { useStore } from "../stores/RootStoreContext";
+import { useStore } from "../../stores/RootStoreContext";
 
-import { useExpenseForm } from '../hooks/useExpenseForm';
-import { Expense } from "../types";
+import { useExpenseForm } from '../../hooks/useExpenseForm';
+import { Expense } from "../../utils/types";
 
-import { AmountInput, CategorySelect, DatePickerInput } from './form';
+import { AmountInput, CategorySelect, DatePickerInput } from "../forms";
 
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../common/ConfirmationDialog";
 
 const ContactForm: React.FC = () => {
     const { expensesStore } = useStore();
 
-    const initialExpense: Omit<Expense, "id"> = {
+    const initialExpense: Omit<Expense, "id"> = useMemo(() => ({
         category: "food",
         amount: 1,
         date: dayjs().valueOf()
-    }
+    }), []);
 
-    const { expense, setExpense, error, handleEditChange, handleDateChange, validateFields } = useExpenseForm(initialExpense);
+    const {
+        expense,
+        setExpense,
+        error,
+        handleEditChange,
+        handleDateChange,
+        validateFields } = useExpenseForm(initialExpense);
 
     const [isDialogOpen, setDialogOpen] = useState(false);
 
@@ -45,20 +51,20 @@ const ContactForm: React.FC = () => {
 
         setDialogOpen(false);
         setExpense(initialExpense);
-    }, [expense, setExpense, expensesStore]);
+    }, [expense, setExpense, expensesStore, initialExpense]);
 
     return (
         <Paper
             elevation={3}
             sx={{
                 p: 4,
-                maxWidth: 600,
-                mx: "auto",
-                mt: 5,
-                borderRadius: 2,
+                width: "100%"
             }}
         >
-            <Typography variant="h5" align="center" gutterBottom>
+            <Typography
+                variant="h5"
+                align="center"
+                gutterBottom>
                 Внести расход
             </Typography>
             {error && (

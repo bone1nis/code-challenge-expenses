@@ -1,14 +1,15 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material";
 
-import { categories } from "../../constants";
+import { categories } from "../../utils/constants";
 
 type CategorySelectProps = {
     value: string;
     onChange: (e: SelectChangeEvent<string>) => void;
+    viewAll?: boolean;
 }
 
-const CategorySelect: React.FC<CategorySelectProps> = ({ value, onChange }) => {
+const CategorySelect: React.FC<CategorySelectProps> = ({ value, onChange, viewAll }) => {
     return (
         <FormControl fullWidth>
             <InputLabel id="select-category-label">Категория</InputLabel>
@@ -20,6 +21,8 @@ const CategorySelect: React.FC<CategorySelectProps> = ({ value, onChange }) => {
                 size="medium"
                 onChange={onChange}
             >
+
+                {viewAll && <MenuItem value={"all"}>Все</MenuItem>}
                 {categories.map((category) => (
                     <MenuItem key={category.key} value={category.key}>
                         {category.value}

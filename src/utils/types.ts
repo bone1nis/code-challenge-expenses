@@ -10,3 +10,10 @@ export type Expense = {
     amount: number;
     date: number;
 }
+
+export type Filters = {
+    category: Categories | "all";
+    minAmount: number | null;
+    maxAmount: number | null;
+    sortByDate: "asc" | "desc";
+}

@@ -5,7 +5,9 @@ const Header: React.FC = () => {
     return (
         <AppBar position="sticky">
             <Toolbar>
-                <Typography variant="h6" color={theme.palette.primary.contrastText}>
+                <Typography
+                    variant="h6"
+                    color={theme.palette.primary.contrastText}>
                     MySpends
                 </Typography>
             </Toolbar>

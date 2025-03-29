@@ -1,45 +1,56 @@
 import { useState, useCallback, useMemo } from 'react';
 
-import { Paper, Stack, Typography, Button, Box, Divider, Alert, useTheme } from '@mui/material';
+import { Paper, Stack, Typography, Button, Box, Divider, Alert, useTheme, Theme } from '@mui/material';
 import { red, grey } from '@mui/material/colors';
 import { RemoveCircle, Event, AttachMoney } from '@mui/icons-material';
 
 import dayjs from 'dayjs';
 
-import { useStore } from '../stores/RootStoreContext';
+import { useStore } from '../../stores/RootStoreContext';
 
-import { Expense, Category } from '../types';
-import { useExpenseForm } from '../hooks/useExpenseForm';
-import { categories } from '../constants';
+import { Expense, Category } from '../../utils/types';
+import { useExpenseForm } from '../../hooks/useExpenseForm';
+import { categories } from '../../utils/constants';
 
-import { AmountInput, CategorySelect, DatePickerInput } from './form';
+import { AmountInput, CategorySelect, DatePickerInput } from '../forms';
 
-import ConfirmationDialog from './ConfirmationDialog';
+import ConfirmationDialog from '../common/ConfirmationDialog';
 
 type ExpenseCardProps = {
     expense: Expense;
 };
 
+const useIconStyle = (theme: Theme) => ({
+    color: theme.palette.primary.main,
+    transition: 'color 0.3s',
+    '&:hover': {
+        color: theme.palette.secondary.main
+    }
+});
+
 const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
     const theme = useTheme();
-
-    const iconStyle = {
-        color: theme.palette.primary.main,
-        transition: 'color 0.3s',
-        '&:hover': {
-            color: theme.palette.secondary.main
-        }
-    };
+    const iconStyle = useIconStyle(theme);
 
     const { expensesStore } = useStore();
-    const { expense: editedExpense, setExpense: setEditedExpense, error, setError, handleEditChange, handleDateChange, validateFields } = useExpenseForm({
-        category: expense.category,
-        amount: expense.amount,
-        date: expense.date
-    });
+    const {
+        expense: editedExpense,
+        setExpense: setEditedExpense,
+        error,
+        setError,
+        handleEditChange,
+        handleDateChange,
+        validateFields } = useExpenseForm({
+            category: expense.category,
+            amount: expense.amount,
+            date: expense.date
+        });
     const [isEditing, setIsEditing] = useState(false);
 
-    const [dialogState, setDialogState] = useState<{ type: 'save' | 'delete' | null; open: boolean }>({
+    const [dialogState, setDialogState] = useState<{
+        type: 'save' | 'delete' | null;
+        open: boolean
+    }>({
         type: null,
         open: false
     });
@@ -120,10 +131,17 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
                 },
             }}
         >
-            <Stack direction="column" gap={2}>
-                <Stack direction="row" justifyContent="space-between" alignItems="start">
+            <Stack
+                direction="column"
+                gap={2}>
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="start">
                     {isEditing ? (
-                        <CategorySelect value={editedExpense.category} onChange={(e) => handleEditChange(e, "category")} />
+                        <CategorySelect
+                            value={editedExpense.category}
+                            onChange={(e) => handleEditChange(e, "category")} />
                     ) : (
                         <Typography
                             variant="h6"
@@ -147,8 +165,13 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
                 <Divider sx={{ borderColor: grey[300] }} />
 
                 <Box>
-                    <Stack direction="column" gap={1}>
-                        <Stack direction="row" alignItems="center" gap={1}>
+                    <Stack
+                        direction="column"
+                        gap={1}>
+                        <Stack
+                            direction="row"
+                            alignItems="center"
+                            gap={1}>
                             <AttachMoney sx={iconStyle} />
                             {isEditing ? (
                                 <AmountInput
@@ -160,7 +183,10 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
                                 </Typography>
                             )}
                         </Stack>
-                        <Stack direction="row" alignItems="center" gap={1}>
+                        <Stack
+                            direction="row"
+                            alignItems="center"
+                            gap={1}>
                             <Event sx={iconStyle} />
                             {isEditing ? (
                                 <DatePickerInput
@@ -178,16 +204,24 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
                 {error && <Alert severity="error">{error}</Alert>}
 
                 {isEditing ? (
-                    <Stack direction="row" gap={2}>
-                        <Button variant="contained" onClick={onSaveChanges}>
+                    <Stack
+                        direction="row"
+                        gap={2}>
+                        <Button
+                            variant="contained"
+                            onClick={onSaveChanges}>
                             Сохранить
                         </Button>
-                        <Button variant="outlined" onClick={handleCancelChanges}>
+                        <Button
+                            variant="outlined"
+                            onClick={handleCancelChanges}>
                             Отменить
                         </Button>
                     </Stack>
                 ) : (
-                    <Button variant="outlined" onClick={startEditing}>
+                    <Button
+                        variant="outlined"
+                        onClick={startEditing}>
                         Редактировать
                     </Button>
                 )}

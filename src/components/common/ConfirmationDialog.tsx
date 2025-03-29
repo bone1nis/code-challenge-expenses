@@ -24,8 +24,11 @@ const ConfirmationDialog: React.FC<ConfirmationDialogProps> = ({ isOpen, title, 
                 </Typography>
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose} color="primary">Отменить</Button>
-                <Button onClick={onConfirm} color="secondary">Подтвердить</Button>
+                <Button
+                    onClick={onClose}>Отменить</Button>
+                <Button
+                    onClick={onConfirm}
+                    color="secondary">Подтвердить</Button>
             </DialogActions>
         </Dialog>
     );

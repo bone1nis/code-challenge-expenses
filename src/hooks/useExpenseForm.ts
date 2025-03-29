@@ -1,6 +1,6 @@
 import { useState, useCallback, ChangeEvent } from "react";
 
-import { Expense } from "../types";
+import { Expense } from "../utils/types";
 import { SelectChangeEvent } from "@mui/material";
 import { Dayjs } from "dayjs";
 
@@ -47,10 +47,6 @@ export const useExpenseForm = (initialExpense: Omit<Expense, "id">) => {
         setError(null);
         return true;
     }, [expense]);
-
-
-
-
 
     return { expense, setExpense, error, setError, handleEditChange, handleDateChange, validateFields };
 };

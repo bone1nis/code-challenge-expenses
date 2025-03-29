@@ -1,15 +1,19 @@
 import { Typography, AppBar, Toolbar, Box, useTheme } from "@mui/material";
 
-const Footer: React.FC = () => {
-    const currentYear = new Date().getFullYear();
+import dayjs from "dayjs";
 
+const Footer: React.FC = () => {
     const theme = useTheme();
     return (
         <AppBar position="static">
             <Toolbar>
-                <Box sx={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                <Box sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%"
+                }}>
                     <Typography variant="body2" color={theme.palette.primary.contrastText}>
-                        © {currentYear} MySpends. Все права защищены.
+                        © {dayjs().year()} MySpends. Все права защищены.
                     </Typography>
                 </Box>
             </Toolbar>

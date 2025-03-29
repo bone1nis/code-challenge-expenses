@@ -1,13 +1,13 @@
 import { Box, Grid } from '@mui/material';
 
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../stores/RootStoreContext';
+import { useStore } from '../../stores/RootStoreContext';
 
 import ExpenseCard from './ExpenseCard';
 
 const ExpensesList: React.FC = observer(() => {
     const { expensesStore } = useStore();
-    const expenses = expensesStore.expenses;
+    const expenses = expensesStore.filteredExpenses;
     return (
         <Box sx={{ padding: 2 }}>
             <Grid

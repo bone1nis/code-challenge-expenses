@@ -1,16 +1,32 @@
-import { Box, Container } from '@mui/material';
+import { Box, Container, Stack } from '@mui/material';
 
-import Header from './components/Header';
-import Footer from './components/Footer';
-import ExpensesList from './components/ExpensesList';
-import ExpenseForm from './components/ExpenseForm';
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
+import ExpensesList from './components/expenses/ExpensesList';
+import ExpenseFilters from './components/expenses/ExpenseFilters';
+import ExpenseForm from './components/expenses/ExpenseForm';
 
 const App: React.FC = () => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <Box sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh'
+    }}>
       <Header />
       <Container sx={{ flex: 1 }}>
-        <ExpenseForm />
+        <Stack
+          direction={{
+            xs: "column",
+            md: "row"
+          }}
+          gap={2}
+          sx={{
+            marginY: 4
+          }}>
+          <ExpenseFilters />
+          <ExpenseForm />
+        </Stack>
         <ExpensesList />
       </Container>
       <Footer />
