@@ -6,6 +6,9 @@ const theme = createTheme({
       main: "#009688",
       contrastText: "#fff",
     },
+    secondary: {
+      main: "#9e9e9e"
+    }
   },
   components: {
     MuiTypography: {

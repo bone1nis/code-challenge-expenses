@@ -2,9 +2,10 @@ import { useState, useCallback, ChangeEvent } from "react";
 
 import { Expense } from "../types";
 import { SelectChangeEvent } from "@mui/material";
+import { Dayjs } from "dayjs";
 
-export const useExpenseForm = (initialContact: Partial<Expense>) => {
-    const [expense, setExpense] = useState<Partial<Expense>>(initialContact);
+export const useExpenseForm = (initialExpense: Omit<Expense, "id">) => {
+    const [expense, setExpense] = useState(initialExpense);
     const [error, setError] = useState<string | null>(null);
 
     const handleEditChange = useCallback(
@@ -17,11 +18,19 @@ export const useExpenseForm = (initialContact: Partial<Expense>) => {
         []
     );
 
-    const validateFields = useCallback((): boolean => {
-        const dateRegex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
+    const handleDateChange = useCallback((date: Dayjs | null) => {
+        if (date) {
+            setExpense(prev => ({
+                ...prev,
+                date: date.valueOf(),
+            }));
+        }
+    }, []);
 
-        if (!expense.date || !dateRegex.test(expense.date)) {
-            setError("Введите корректную дату в формате DD-MM-YYYY");
+    const validateFields = useCallback((): boolean => {
+
+        if (!expense.date) {
+            setError("Укажите дату");
             return false;
         }
 
@@ -31,7 +40,7 @@ export const useExpenseForm = (initialContact: Partial<Expense>) => {
         }
 
         if (!expense.category || expense.category.trim() === "") {
-            setError("Заполните категорию");
+            setError("Укажите категорию");
             return false;
         }
 
@@ -43,5 +52,5 @@ export const useExpenseForm = (initialContact: Partial<Expense>) => {
 
 
 
-    return { expense, setExpense, error, setError, handleEditChange, validateFields };
+    return { expense, setExpense, error, setError, handleEditChange, handleDateChange, validateFields };
 };

@@ -8,5 +8,5 @@ export type Expense = {
     id: string;
     category: Categories;
     amount: number;
-    date: string;
+    date: number;
 }

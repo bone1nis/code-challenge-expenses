@@ -8,13 +8,13 @@ export class ExpensesStore {
             id: "айди1",
             category: "charity",
             amount: 123,
-            date: "01-02-2025"
+            date: 123
         },
         {
             id: "айди2",
             category: "clothing",
             amount: 234,
-            date: "01-03-2025"
+            date: 3245
         }
     ]
     constructor() {

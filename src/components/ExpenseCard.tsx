@@ -1,14 +1,18 @@
 import { useState, useCallback, useMemo } from 'react';
-import { Paper, Stack, Typography, Button, Box, Divider, TextField, Alert, useTheme, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+
+import { Paper, Stack, Typography, Button, Box, Divider, Alert, useTheme } from '@mui/material';
 import { red, grey } from '@mui/material/colors';
 import { RemoveCircle, Event, AttachMoney } from '@mui/icons-material';
 
+import dayjs from 'dayjs';
+
 import { useStore } from '../stores/RootStoreContext';
+
 import { Expense, Category } from '../types';
-
 import { useExpenseForm } from '../hooks/useExpenseForm';
-
 import { categories } from '../constants';
+
+import { AmountInput, CategorySelect, DatePickerInput } from './form';
 
 import ConfirmationDialog from './ConfirmationDialog';
 
@@ -28,7 +32,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
     };
 
     const { expensesStore } = useStore();
-    const { expense: editedExpense, setExpense: setEditedExpense, error, setError, handleEditChange, validateFields } = useExpenseForm({
+    const { expense: editedExpense, setExpense: setEditedExpense, error, setError, handleEditChange, handleDateChange, validateFields } = useExpenseForm({
         category: expense.category,
         amount: expense.amount,
         date: expense.date
@@ -119,25 +123,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
             <Stack direction="column" gap={2}>
                 <Stack direction="row" justifyContent="space-between" alignItems="start">
                     {isEditing ? (
-                        <Stack direction="column" gap={2}>
-                            <FormControl fullWidth>
-                                <InputLabel id="select-category-label">Категория</InputLabel>
-                                <Select
-                                    labelId="select-category-label"
-                                    id="select-category"
-                                    value={editedExpense.category}
-                                    label="Категория"
-                                    size="medium"
-                                    onChange={(e) => handleEditChange(e, 'category')}
-                                >
-                                    {categories.map((category) => (
-                                        <MenuItem key={category.key} value={category.key}>
-                                            {category.value}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </Stack>
+                        <CategorySelect value={editedExpense.category} onChange={(e) => handleEditChange(e, "category")} />
                     ) : (
                         <Typography
                             variant="h6"
@@ -165,13 +151,9 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
                         <Stack direction="row" alignItems="center" gap={1}>
                             <AttachMoney sx={iconStyle} />
                             {isEditing ? (
-                                <TextField
-                                    label="Сумма"
+                                <AmountInput
                                     value={editedExpense.amount}
-                                    onChange={(e) => handleEditChange(e, 'amount')}
-                                    size="small"
-                                    required
-                                />
+                                    onChange={(e) => handleEditChange(e, 'amount')} />
                             ) : (
                                 <Typography variant="body2">
                                     Сумма: {expense.amount} ₽
@@ -181,16 +163,12 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense }) => {
                         <Stack direction="row" alignItems="center" gap={1}>
                             <Event sx={iconStyle} />
                             {isEditing ? (
-                                <TextField
-                                    label="Дата"
+                                <DatePickerInput
                                     value={editedExpense.date}
-                                    onChange={(e) => handleEditChange(e, 'date')}
-                                    size="small"
-                                    required
-                                />
+                                    onChange={handleDateChange} />
                             ) : (
                                 <Typography variant="body2">
-                                    Дата: {expense.date}
+                                    Дата: {dayjs(expense.date).format("DD/MM/YYYY HH:mm")}
                                 </Typography>
                             )}
                         </Stack>

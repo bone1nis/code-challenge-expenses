@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 
 import { CssBaseline } from '@mui/material'
 import { ThemeProvider } from '@mui/material'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import theme from './theme.ts'
 
 import { RootStoreContext } from './stores/RootStoreContext.ts'
@@ -12,11 +14,13 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RootStoreContext.Provider value={new RootStore()}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
+        <RootStoreContext.Provider value={new RootStore()}>
+          <CssBaseline />
+          <App />
+        </RootStoreContext.Provider>
       </ThemeProvider>
-    </RootStoreContext.Provider>
+    </LocalizationProvider>
   </StrictMode>,
 )
